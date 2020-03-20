@@ -1,0 +1,54 @@
+<button (click)="onChangeGraph()">Click here to change the graph</button>
+<div>
+  <ngx-graph [view]="[800, 800]"
+        [layout]="layout"
+        [links]=links
+        [nodes]=nodes
+        [curve]="curve"
+        [draggingEnabled]="draggingEnabled"
+        [panningEnabled]="panningEnabled"
+        [enableZoom]="zoomEnabled"
+        [zoomSpeed]="zoomSpeed"
+        [minZoomLevel]="minZoomLevel"
+        [maxZoomLevel]="maxZoomLevel"
+        [panOnZoom]="panOnZoom"
+        [autoZoom]="autoZoom"
+        [autoCenter]="autoCenter"
+        [update$]="update$"
+        [center$]="center$"
+        [zoomToFit$]="zoomToFit$"
+    >
+        <ng-template #defsTemplate>
+          <svg:marker id="arrow" viewBox="0 -5 10 10" refX="8" refY="0" markerWidth="4" markerHeight="4" orient="auto">
+            <svg:path d="M0,-5L10,0L0,5" class="arrow-head" />
+          </svg:marker>
+        </ng-template>
+
+        <ng-template #nodeTemplate let-node>
+          <svg:g *ngIf="node.data.nodeType==='Milestone'" class="node" (click)="onNodeClick(node)">
+            <svg:rect [attr.width]="node.dimension.width" [attr.height]="node.dimension.height" [attr.fill]="node.data.backgroundColor"/>
+            <svg:text alignment-baseline="central" [attr.x]="10" [attr.fill]="node.data.color" [attr.y]="node.dimension.height / 2">{{node.label}}</svg:text>
+          </svg:g>
+          <svg:g *ngIf="node.data.nodeType==='Task'" class="node" (click)="onNodeClick(node)">
+            <svg:ellipse [attr.width]=65 [attr.height]=65
+            [attr.cx]="node.dimension.width / 2" [attr.cy]="node.dimension.height / 2"
+            [attr.rx]="25" [attr.cy]="25"
+            [attr.fill]="node.data.backgroundColor" />
+            <svg:text alignment-baseline="central" [attr.fill]="node.data.color" [attr.x]="10" [attr.y]="node.dimension.height / 2">{{node.label}}</svg:text>
+          </svg:g>
+        </ng-template>
+
+        <ng-template #linkTemplate let-link>
+          <svg:g class="edge" (click)="onLineClick(link)">
+            <svg:path class="line" stroke-width="2" marker-end="url(#arrow)">
+            </svg:path>
+            <svg:text class="edge-label" text-anchor="middle">
+              <textPath class="text-path" [attr.href]="'#' + link.id" [style.dominant-baseline]="link.dominantBaseline"
+                startOffset="50%">
+                {{link.label}}
+              </textPath>
+            </svg:text>
+          </svg:g>
+        </ng-template>
+  </ngx-graph>
+</div>
