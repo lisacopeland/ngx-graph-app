@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ElementRef, AfterViewInit, ViewChild } from '@angular/core';
 import { Edge, Node, Layout } from '@swimlane/ngx-graph';
 
 import * as shape from 'd3-shape';
@@ -12,6 +12,13 @@ import { Subject } from 'rxjs';
 export class MygraphComponent implements OnInit {
   // hierarchialGraph = { nodes: [], links: [] };
   // curve = shape.curveBundle.beta(1);
+  milestoneBackground = '#99ccff';
+  milestoneText = '#ff0000';
+  nodeBackground = '#ff80ff';
+  nodeText = '#0000cc';
+  lineColor = '#333333';
+
+  @ViewChild('node1') node1: ElementRef;
   curve: any = shape.curveLinear;
   layout = 'dagre';
   draggingEnabled = true;
@@ -32,11 +39,11 @@ export class MygraphComponent implements OnInit {
   nodes: Node[] = [
     {
       id: '1',
-      label: 'Milestone A',
+      label: 'Milestone ABCDEFGHIJK',
       data: {
         nodeType: 'Milestone',
-        backgroundColor: 'blue',
-        color: 'white'
+        backgroundColor: '#99ccff',
+        color: 'black',
       }
     },
     {
@@ -44,7 +51,7 @@ export class MygraphComponent implements OnInit {
       label: 'Task B',
       data: {
         nodeType: 'Task',
-        backgroundColor: 'pink',
+        backgroundColor: '#ff80ff',
         color: 'black'
       }
 
@@ -54,7 +61,7 @@ export class MygraphComponent implements OnInit {
       label: 'Task C',
       data: {
         nodeType: 'Task',
-        backgroundColor: 'pink',
+        backgroundColor: '#ff80ff',
         color: 'black'
       }
 
@@ -64,7 +71,7 @@ export class MygraphComponent implements OnInit {
       label: 'Task D',
       data: {
         nodeType: 'Task',
-        backgroundColor: 'pink',
+        backgroundColor: '#ff80ff',
         color: 'black'
       }
 
@@ -74,7 +81,7 @@ export class MygraphComponent implements OnInit {
       label: 'Task E',
       data: {
         nodeType: 'Task',
-        backgroundColor: 'pink',
+        backgroundColor: '#ff80ff',
         color: 'black'
       }
 
@@ -84,8 +91,8 @@ export class MygraphComponent implements OnInit {
       label: 'Milestone F',
        data: {
          nodeType: 'Milestone',
-         backgroundColor: 'blue',
-         color: 'white'
+         backgroundColor: '#99ccff',
+         color: 'black'
        }
 
     }

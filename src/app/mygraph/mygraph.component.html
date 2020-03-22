@@ -25,16 +25,42 @@
         </ng-template>
 
         <ng-template #nodeTemplate let-node>
-          <svg:g *ngIf="node.data.nodeType==='Milestone'" class="node" (click)="onNodeClick(node)">
-            <svg:rect [attr.width]="node.dimension.width" [attr.height]="node.dimension.height" [attr.fill]="node.data.backgroundColor"/>
-            <svg:text alignment-baseline="central" [attr.x]="10" [attr.fill]="node.data.color" [attr.y]="node.dimension.height / 2">{{node.label}}</svg:text>
+
+          <svg:g *ngIf="node.data.nodeType==='Milestone'"
+            class="node"
+            (click)="onNodeClick(node)">
+            <svg:rect
+              class="node-rect"
+              [attr.width]=150
+              [attr.height]=55
+              [attr.rx]=5
+              [attr.ry]=5
+              [attr.fill]="milestoneBackground"/>
+            <svg:text
+              dominant-baseline="middle"
+              text-anchor="middle"
+              [attr.fill]=milestoneText
+              [attr.x]="node.dimension.width / 2"
+              [attr.y]="node.dimension.height / 2">{{ node.label | slice:0:17 }}</svg:text>
           </svg:g>
-          <svg:g *ngIf="node.data.nodeType==='Task'" class="node" (click)="onNodeClick(node)">
-            <svg:ellipse [attr.width]=65 [attr.height]=65
-            [attr.cx]="node.dimension.width / 2" [attr.cy]="node.dimension.height / 2"
-            [attr.rx]="25" [attr.cy]="25"
-            [attr.fill]="node.data.backgroundColor" />
-            <svg:text alignment-baseline="central" [attr.fill]="node.data.color" [attr.x]="10" [attr.y]="node.dimension.height / 2">{{node.label}}</svg:text>
+
+          <svg:g *ngIf="node.data.nodeType==='Task'"
+            class="node"
+            (click)="onNodeClick(node)">
+            <svg:ellipse
+              class="node-ellipse"
+              [attr.width]=150
+              [attr.height]=65
+              [attr.cx]="node.dimension.width / 2"
+              [attr.cy]="node.dimension.height / 2"
+              [attr.rx]=65 [attr.ry]=30
+              [attr.fill]="node.data.backgroundColor" />
+            <svg:text
+              dominant-baseline="middle"
+              text-anchor="middle"
+              [attr.fill]="nodeText"
+              [attr.x]="node.dimension.width / 2"
+              [attr.y]="node.dimension.height / 2">{{node.label}}</svg:text>
           </svg:g>
         </ng-template>
 
@@ -43,7 +69,7 @@
             <svg:path class="line" stroke-width="2" marker-end="url(#arrow)">
             </svg:path>
             <svg:text class="edge-label" text-anchor="middle">
-              <textPath class="text-path" [attr.href]="'#' + link.id" [style.dominant-baseline]="link.dominantBaseline"
+              <textPath class="text-path" [attr.fill]="" [attr.href]="'#' + link.id" [style.dominant-baseline]="link.dominantBaseline"
                 startOffset="50%">
                 {{link.label}}
               </textPath>
