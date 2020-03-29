@@ -3,6 +3,7 @@ import { Edge, Node, Layout } from '@swimlane/ngx-graph';
 
 import * as shape from 'd3-shape';
 import { Subject } from 'rxjs';
+import { DataService } from './data.service';
 
 @Component({
   selector: 'app-mygraph',
@@ -36,101 +37,15 @@ export class MygraphComponent implements OnInit {
   update$: Subject<boolean> = new Subject();
   center$: Subject<boolean> = new Subject();
   zoomToFit$: Subject<boolean> = new Subject();
-  nodes: Node[] = [
-    {
-      id: '1',
-      label: 'Milestone ABCDEFGHIJK',
-      data: {
-        nodeType: 'Milestone',
-        backgroundColor: '#99ccff',
-        color: 'black',
-      }
-    },
-    {
-      id: '2',
-      label: 'Task B',
-      data: {
-        nodeType: 'Task',
-        backgroundColor: '#ff80ff',
-        color: 'black'
-      }
+  nodes: Node[];
+  links: Edge[];
 
-    },
-    {
-      id: '3',
-      label: 'Task C',
-      data: {
-        nodeType: 'Task',
-        backgroundColor: '#ff80ff',
-        color: 'black'
-      }
-
-    },
-    {
-      id: '4',
-      label: 'Task D',
-      data: {
-        nodeType: 'Task',
-        backgroundColor: '#ff80ff',
-        color: 'black'
-      }
-
-    },
-    {
-      id: '5',
-      label: 'Task E',
-      data: {
-        nodeType: 'Task',
-        backgroundColor: '#ff80ff',
-        color: 'black'
-      }
-
-    },
-     {
-      id: '6',
-      label: 'Milestone F',
-       data: {
-         nodeType: 'Milestone',
-         backgroundColor: '#99ccff',
-         color: 'black'
-       }
-
-    }
-  ];
-
-  links: Edge[] = [
-    {
-      id: 'a',
-      source: '1',
-      target: '2',
-      label: 'Between 1 and 2'
-    }, {
-      id: 'b',
-      source: '1',
-      target: '3'
-    }, {
-      id: 'c',
-      source: '3',
-      target: '4',
-      label: 'Between 3 & 4'
-    }, {
-      id: 'd',
-      source: '3',
-      target: '5'
-    }, {
-      id: 'e',
-      source: '4',
-      target: '5'
-    }, {
-      id: 'f',
-      source: '2',
-      target: '6'
-    }
-  ];
-
-  constructor(private elementRef: ElementRef) { }
+  constructor(private elementRef: ElementRef,
+              private dataService: DataService) { }
 
   ngOnInit(): void {
+    this.nodes = this.dataService.nodes;
+    this.links = this.dataService.links;
   }
 
   public getStyles(node: Node): any {
