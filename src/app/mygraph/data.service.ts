@@ -188,6 +188,7 @@ export class DataService {
     },
     {
       id: 'edge2',
+      label: 'This is a label!',
       source: 'region_build.ec2!installec2!l.hardwareready',
       target: 'region_build.ec2!installec2!a.identifyservers'
     },
