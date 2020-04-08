@@ -19,6 +19,10 @@ export class MygraphComponent implements OnInit {
   nodeText = '#0000cc';
   lineColor = '#333333';
 
+  linkPointDef = '1 50, 100 100, 200 50, 100 1';
+  textDominantBaseline = 'middle';
+  textAnchor = 'middle';
+  textStartOffset = '50%';
   @ViewChild('node1') node1: ElementRef;
   curve: any = shape.curveLinear;
   layout = 'dagre';

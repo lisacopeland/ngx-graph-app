@@ -2,6 +2,8 @@
 <div>
   <ngx-graph
     [view]="[1000, 1000]"
+    [nodeWidth]="150"
+    [nodeHeight]="100"
     [layout]="layout"
     [links]=links
     [nodes]=nodes
@@ -31,7 +33,7 @@
             <svg:rect
               class="node-rect"
               [attr.width]=150
-              [attr.height]=55
+              [attr.height]=100
               [attr.rx]=5
               [attr.ry]=5
               [attr.fill]="milestoneBackground"/>
@@ -39,34 +41,43 @@
               dominant-baseline="middle"
               text-anchor="middle"
               [attr.fill]=milestoneText
-              [attr.x]="node.dimension.width / 2"
-              [attr.y]="node.dimension.height / 2">{{ node.label | slice:0:17 }}</svg:text>
+              [attr.x]="150 / 2"
+              [attr.y]="100 / 2">{{ node.label | slice:0:17 }}</svg:text>
           </svg:g>
 
           <svg:g *ngIf="node.data.node.nodeType==='LinkPoint'" class="node" (click)="onNodeClick(node)">
-            <svg:rect class="node-rect" [attr.width]=150 [attr.height]=55 [attr.rx]=5 [attr.ry]=5
+            <svg:polygon class="node-rect" [attr.width]=150 [attr.height]=100
+              [attr.points]="linkPointDef"
               [attr.fill]="milestoneBackground" />
-            <svg:text dominant-baseline="middle" text-anchor="middle" [attr.fill]=milestoneText
-              [attr.x]="node.dimension.width / 2" [attr.y]="node.dimension.height / 2">{{ node.label | slice:0:17 }}</svg:text>
+            <svg:text
+              [attr.dominant-baseline]="textDominantBaseline"
+              [attr.text-anchor]="textAnchor"
+              [attr.startOffset]="textStartOffset"
+              [attr.fill]=milestoneText
+              [attr.x]="150 / 2"
+              [attr.y]="100 / 2">
+              {{ node.label | slice:0:17 }}
+              </svg:text>
           </svg:g>
+
+<!--               [attr.width]=150
+              [attr.height]=100 -->
 
           <svg:g *ngIf="node.data.node.nodeType==='Action'"
             class="node"
             (click)="onNodeClick(node)">
             <svg:ellipse
               class="node-ellipse"
-              [attr.width]=150
-              [attr.height]=65
-              [attr.cx]="node.dimension.width / 2"
-              [attr.cy]="node.dimension.height / 2"
-              [attr.rx]=65 [attr.ry]=30
+              [attr.cx]="150 / 2"
+              [attr.cy]="100 / 2"
+              [attr.rx]=100 [attr.ry]=50
               [attr.fill]="nodeBackground" />
             <svg:text
               dominant-baseline="middle"
               text-anchor="middle"
               [attr.fill]="nodeText"
-              [attr.x]="node.dimension.width / 2"
-              [attr.y]="node.dimension.height / 2">{{node.label}}</svg:text>
+              [attr.x]="150 / 2"
+              [attr.y]="100 / 2">{{node.label}}</svg:text>
           </svg:g>
         </ng-template>
 
