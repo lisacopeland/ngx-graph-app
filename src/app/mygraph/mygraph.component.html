@@ -1,4 +1,4 @@
-<button (click)="onChangeGraph()">Click here to change the graph</button>
+<button (click)="onChangeGraph()">Click here to change the labels</button>
 <div>
   <ngx-graph
     [view]="[1000, 1000]"
@@ -26,10 +26,20 @@
           </svg:marker>
         </ng-template>
 
+          <mat-menu #clickMenu="matMenu">
+            <button mat-menu-item >Edit</button>
+            <button mat-menu-item >Add Line From Here</button>
+            <button mat-menu-item >Add Line to Here</button>
+            <button mat-menu-item >Delete</button>
+          </mat-menu>
+
         <ng-template #nodeTemplate let-node>
           <svg:g *ngIf="node.data.node.nodeType==='Milestone'"
-            class="node"
-            (click)="onNodeClick(node)">
+            [matTooltip]="'Type: ' + node.data.node?.milestoneType + '&#13;' + 'Label: ' + node.data.node?.label"
+            [matTooltipClass]="'nodeTooltip'"
+            mat-button
+            [matMenuTriggerFor]="clickMenu"
+            class="node">
             <svg:rect
               class="node-rect"
               [attr.width]=150
@@ -38,6 +48,7 @@
               [attr.ry]=5
               [attr.fill]="milestoneBackground"/>
             <svg:text
+              class="milestone-text"
               dominant-baseline="middle"
               text-anchor="middle"
               [attr.fill]=milestoneText
@@ -45,7 +56,13 @@
               [attr.y]="100 / 2">{{ node.label | slice:0:17 }}</svg:text>
           </svg:g>
 
-          <svg:g *ngIf="node.data.node.nodeType==='LinkPoint'" class="node" (click)="onNodeClick(node)">
+          <svg:g
+            *ngIf="node.data.node.nodeType==='LinkPoint'"
+            class="node"
+            [matTooltip]="'Links to ' + node.data.node?.linkedId"
+            [matTooltipClass]="'nodeTooltip'"
+            mat-button
+            [matMenuTriggerFor]="clickMenu">
             <svg:polygon class="node-rect" [attr.width]=150 [attr.height]=100
               [attr.points]="linkPointDef"
               [attr.fill]="milestoneBackground" />
@@ -60,12 +77,12 @@
               </svg:text>
           </svg:g>
 
-<!--               [attr.width]=150
-              [attr.height]=100 -->
-
           <svg:g *ngIf="node.data.node.nodeType==='Action'"
-            class="node"
-            (click)="onNodeClick(node)">
+            [matTooltip]="'Action type: ' + node.data.node?.actionType"
+            [matTooltipClass]="'nodeTooltip'"
+            mat-button
+            [matMenuTriggerFor]="clickMenu"
+            class="node">
             <svg:ellipse
               class="node-ellipse"
               [attr.cx]="150 / 2"

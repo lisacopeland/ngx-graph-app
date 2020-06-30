@@ -6,6 +6,8 @@ import { AppComponent } from './app.component';
 import { NgxGraphModule } from '@swimlane/ngx-graph';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { MygraphComponent } from './mygraph/mygraph.component';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatMenuModule } from '@angular/material/menu';
 
 @NgModule({
   declarations: [
@@ -15,6 +17,8 @@ import { MygraphComponent } from './mygraph/mygraph.component';
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
+    MatTooltipModule,
+    MatMenuModule,
     NgxGraphModule,
     NgxChartsModule // I don't think I need this
   ],
