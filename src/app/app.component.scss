@@ -1,9 +1,17 @@
-  .ribbon {
+.wrapper {
+  background-color: #ACBEA3;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 100vh;
+}
+
+.ribbon {
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
     align-items: center;
     height: 50px;
     padding-left: 20px;
-    background-color: #99ccff;
+    background-color: #826754;
+    color: lightgray;
   }

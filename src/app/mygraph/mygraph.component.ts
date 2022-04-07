@@ -13,10 +13,10 @@ import { DataService } from './data.service';
 export class MygraphComponent implements OnInit {
   // hierarchialGraph = { nodes: [], links: [] };
   // curve = shape.curveBundle.beta(1);
-  milestoneBackground = '#99ccff';
-  milestoneText = '#ff0000';
-  nodeBackground = '#ff80ff';
-  nodeText = '#0000cc';
+  milestoneBackground = '#40476D';
+  milestoneText = '#cccccc';
+  nodeBackground = '#AD5D4E';
+  nodeText = '#ffffff';
   lineColor = '#333333';
 
   linkPointDef = '1 50, 100 100, 200 50, 100 1';
