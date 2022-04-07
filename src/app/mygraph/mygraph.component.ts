@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef, AfterViewInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { Edge, Node, Layout } from '@swimlane/ngx-graph';
 
 import * as shape from 'd3-shape';
@@ -35,8 +35,8 @@ export class MygraphComponent implements OnInit {
   maxZoomLevel = 4.0;
   panOnZoom = true;
 
-  autoZoom = false;
-  autoCenter = false;
+  autoZoom = true;
+  autoCenter = true;
 
   update$: Subject<boolean> = new Subject();
   center$: Subject<boolean> = new Subject();

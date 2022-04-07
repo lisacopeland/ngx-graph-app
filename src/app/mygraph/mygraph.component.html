@@ -1,12 +1,13 @@
-<button (click)="onChangeGraph()">Click here to change the labels</button>
-<div>
+<div class="graph-wrapper">
+  <button class="change-button" (click)="onChangeGraph()">
+    change the labels
+  </button>
   <ngx-graph
-    [view]="[1000, 1000]"
     [nodeWidth]="150"
     [nodeHeight]="100"
     [layout]="layout"
-    [links]=links
-    [nodes]=nodes
+    [links]="links"
+    [nodes]="nodes"
     [curve]="curve"
     [draggingEnabled]="draggingEnabled"
     [panningEnabled]="panningEnabled"
@@ -19,96 +20,138 @@
     [autoCenter]="autoCenter"
     [update$]="update$"
     [center$]="center$"
-    [zoomToFit$]="zoomToFit$">
-        <ng-template #defsTemplate>
-          <svg:marker id="arrow" viewBox="0 -5 10 10" refX="8" refY="0" markerWidth="4" markerHeight="4" orient="auto">
-            <svg:path d="M0,-5L10,0L0,5" class="arrow-head" />
-          </svg:marker>
-        </ng-template>
+    [zoomToFit$]="zoomToFit$"
+  >
+    <ng-template #defsTemplate>
+      <svg:marker
+        id="arrow"
+        viewBox="0 -5 10 10"
+        refX="8"
+        refY="0"
+        markerWidth="4"
+        markerHeight="4"
+        orient="auto"
+      >
+        <svg:path d="M0,-5L10,0L0,5" class="arrow-head" />
+      </svg:marker>
+    </ng-template>
 
-          <mat-menu #clickMenu="matMenu">
-            <button mat-menu-item >Edit</button>
-            <button mat-menu-item >Add Line From Here</button>
-            <button mat-menu-item >Add Line to Here</button>
-            <button mat-menu-item >Delete</button>
-          </mat-menu>
+    <mat-menu #clickMenu="matMenu">
+      <button mat-menu-item>Edit</button>
+      <button mat-menu-item>Add Line From Here</button>
+      <button mat-menu-item>Add Line to Here</button>
+      <button mat-menu-item>Delete</button>
+    </mat-menu>
 
-        <ng-template #nodeTemplate let-node>
-          <svg:g *ngIf="node.data.node.nodeType==='Milestone'"
-            [matTooltip]="'Type: ' + node.data.node?.milestoneType + '&#13;' + 'Label: ' + node.data.node?.label"
-            [matTooltipClass]="'nodeTooltip'"
-            mat-button
-            [matMenuTriggerFor]="clickMenu"
-            class="node">
-            <svg:rect
-              class="node-rect"
-              [attr.width]=150
-              [attr.height]=100
-              [attr.rx]=5
-              [attr.ry]=5
-              [attr.fill]="milestoneBackground"/>
-            <svg:text
-              class="milestone-text"
-              dominant-baseline="middle"
-              text-anchor="middle"
-              [attr.fill]=milestoneText
-              [attr.x]="150 / 2"
-              [attr.y]="100 / 2">{{ node.label | slice:0:17 }}</svg:text>
-          </svg:g>
+    <ng-template #nodeTemplate let-node>
+      <svg:g
+        *ngIf="node.data.node.nodeType === 'Milestone'"
+        [matTooltip]="
+          'Type: ' +
+          node.data.node?.milestoneType +
+          '&#13;' +
+          'Label: ' +
+          node.data.node?.label
+        "
+        [matTooltipClass]="'nodeTooltip'"
+        mat-button
+        [matMenuTriggerFor]="clickMenu"
+        class="node"
+      >
+        <svg:rect
+          class="node-rect"
+          [attr.width]="150"
+          [attr.height]="100"
+          [attr.rx]="5"
+          [attr.ry]="5"
+          [attr.fill]="milestoneBackground"
+        />
+        <svg:text
+          class="milestone-text"
+          dominant-baseline="middle"
+          text-anchor="middle"
+          [attr.fill]="milestoneText"
+          [attr.x]="150 / 2"
+          [attr.y]="100 / 2"
+        >
+          {{ node.label | slice: 0:17 }}
+        </svg:text>
+      </svg:g>
 
-          <svg:g
-            *ngIf="node.data.node.nodeType==='LinkPoint'"
-            class="node"
-            [matTooltip]="'Links to ' + node.data.node?.linkedId"
-            [matTooltipClass]="'nodeTooltip'"
-            mat-button
-            [matMenuTriggerFor]="clickMenu">
-            <svg:polygon class="node-rect" [attr.width]=150 [attr.height]=100
-              [attr.points]="linkPointDef"
-              [attr.fill]="milestoneBackground" />
-            <svg:text
-              [attr.dominant-baseline]="textDominantBaseline"
-              [attr.text-anchor]="textAnchor"
-              [attr.startOffset]="textStartOffset"
-              [attr.fill]=milestoneText
-              [attr.x]="150 / 2"
-              [attr.y]="100 / 2">
-              {{ node.label | slice:0:17 }}
-              </svg:text>
-          </svg:g>
+      <svg:g
+        *ngIf="node.data.node.nodeType === 'LinkPoint'"
+        class="node"
+        [matTooltip]="'Links to ' + node.data.node?.linkedId"
+        [matTooltipClass]="'nodeTooltip'"
+        mat-button
+        [matMenuTriggerFor]="clickMenu"
+      >
+        <svg:polygon
+          class="node-rect"
+          [attr.width]="150"
+          [attr.height]="100"
+          [attr.points]="linkPointDef"
+          [attr.fill]="milestoneBackground"
+        />
+        <svg:text
+          [attr.dominant-baseline]="textDominantBaseline"
+          [attr.text-anchor]="textAnchor"
+          [attr.startOffset]="textStartOffset"
+          [attr.fill]="milestoneText"
+          [attr.x]="150 / 2"
+          [attr.y]="100 / 2"
+        >
+          {{ node.label | slice: 0:17 }}
+        </svg:text>
+      </svg:g>
 
-          <svg:g *ngIf="node.data.node.nodeType==='Action'"
-            [matTooltip]="'Action type: ' + node.data.node?.actionType"
-            [matTooltipClass]="'nodeTooltip'"
-            mat-button
-            [matMenuTriggerFor]="clickMenu"
-            class="node">
-            <svg:ellipse
-              class="node-ellipse"
-              [attr.cx]="150 / 2"
-              [attr.cy]="100 / 2"
-              [attr.rx]=100 [attr.ry]=50
-              [attr.fill]="nodeBackground" />
-            <svg:text
-              dominant-baseline="middle"
-              text-anchor="middle"
-              [attr.fill]="nodeText"
-              [attr.x]="150 / 2"
-              [attr.y]="100 / 2">{{node.label}}</svg:text>
-          </svg:g>
-        </ng-template>
+      <svg:g
+        *ngIf="node.data.node.nodeType === 'Action'"
+        [matTooltip]="'Action type: ' + node.data.node?.actionType"
+        [matTooltipClass]="'nodeTooltip'"
+        mat-button
+        [matMenuTriggerFor]="clickMenu"
+        class="node"
+      >
+        <svg:ellipse
+          class="node-ellipse"
+          [attr.cx]="150 / 2"
+          [attr.cy]="100 / 2"
+          [attr.rx]="100"
+          [attr.ry]="50"
+          [attr.fill]="nodeBackground"
+        />
+        <svg:text
+          dominant-baseline="middle"
+          text-anchor="middle"
+          [attr.fill]="nodeText"
+          [attr.x]="150 / 2"
+          [attr.y]="100 / 2"
+        >
+          {{ node.label }}
+        </svg:text>
+      </svg:g>
+    </ng-template>
 
-        <ng-template #linkTemplate let-link>
-          <svg:g class="edge" (click)="onLineClick(link)">
-            <svg:path class="line" stroke-width="2" marker-end="url(#arrow)">
-            </svg:path>
-            <svg:text class="edge-label" text-anchor="middle">
-              <textPath class="text-path" [attr.fill]="" [attr.href]="'#' + link.id" [style.dominant-baseline]="link.dominantBaseline"
-                startOffset="50%">
-                {{link.label}}
-              </textPath>
-            </svg:text>
-          </svg:g>
-        </ng-template>
+    <ng-template #linkTemplate let-link>
+      <svg:g class="edge" (click)="onLineClick(link)">
+        <svg:path
+          class="line"
+          stroke-width="2"
+          marker-end="url(#arrow)"
+        ></svg:path>
+        <svg:text class="edge-label" text-anchor="middle">
+          <textPath
+            class="text-path"
+            [attr.fill]=""
+            [attr.href]="'#' + link.id"
+            [style.dominant-baseline]="link.dominantBaseline"
+            startOffset="50%"
+          >
+            {{ link.label }}
+          </textPath>
+        </svg:text>
+      </svg:g>
+    </ng-template>
   </ngx-graph>
 </div>

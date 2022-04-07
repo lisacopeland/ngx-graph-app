@@ -1,3 +1,17 @@
+.graph-wrapper {
+  display: flex;
+  flex: 1 0 100%;
+  flex-direction: column;
+  height: calc(100vh - 140px);
+   width: 98vw;
+}
+
+.change-button {
+  margin: 20px;
+  height: 50px;
+  width: 100px;
+}
+
 .graph {
   -webkit-user-select: none;
      -moz-user-select: none;
